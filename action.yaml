@@ -5,6 +5,10 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'world'
+  substeps:
+    description: 'Steps to run'
+    required: true
+    default: []
 runs:
   using: "composite"
   steps:
@@ -12,14 +16,11 @@ runs:
       run: |
         echo Hello ${{ inputs.greeted }}
       shell: bash
-    - name: randon number output
-      run: |
-        echo Your random number is
-        echo $RANDOM
-      shell: bash
-    - name: goodbye setup
+    - name: script
       run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
+    - name: Run echo args
+      run: echo_args.sh ${{ inputs.substeps }}
     - name: goodbye
       run: goodbye.sh
       shell: bash
