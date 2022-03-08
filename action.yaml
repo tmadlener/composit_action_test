@@ -1,0 +1,25 @@
+name: 'Composite Action test'
+description: 'Test composite action steps'
+inputs:
+  greeted:
+    description: 'Who to greet'
+    required: true
+    default: 'world'
+runs:
+  using: "composite"
+  steps:
+    - name: greeting
+      run: |
+        echo Hello ${{ inputs.greeted }}
+      shell: bash
+    - name: randon number output
+      run: |
+        echo Your random number is
+        echo $RANDOM
+      shell: bash
+    - name: goodbye setup
+      run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - name: goodbye
+      run: goodbye.sh
+      shell: bash
